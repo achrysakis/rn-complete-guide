@@ -1,11 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.form}>
+        <TextInput placeholder='Course goal' style={styles.textInput} />
+        <View style={styles.buttonInput} >
+          <Button title="Add" style={styles.buttonInputText} />
+        </View>
+      </View>
+      <View></View>
     </View>
   );
 }
@@ -17,4 +21,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  form: {
+    flexDirection: 'row',
+    width: '80%',
+    justifyContent: 'center',
+  },
+  textInput: {
+    padding: 5,
+    borderColor: 'black',
+    borderRightWidth: 0,
+    borderWidth: 1,
+    width: '60%',
+  },
+  buttonInput: {
+    backgroundColor: 'black',
+    borderColor: 'black',
+    borderWidth: 1,
+    color: 'white',
+  },
+  buttonInputText: {
+    color: 'white'
+  }
 });

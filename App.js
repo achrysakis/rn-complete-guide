@@ -1,40 +1,29 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState('');
   const [goals, setGoals] = useState([]);
 
-  const goalInputHandler = (text) => {
-    setEnteredGoal(text)
-  }
-
-  const addGoalHandler = () => {
-    setGoals(currentGoals => [...goals, enteredGoal]);
+  const addGoalHandler = goalTitle => {
+    setGoals(currentGoals => [
+      ...goals, 
+      { id: Math.random().toString(), value: goalTitle}
+    ]);
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
-        <TextInput 
-          placeholder='Course goal' 
-          style={styles.textInput} 
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-        />
+      <GoalInput onAddGoal={addGoalHandler} />
 
-        <View style={styles.buttonInput} >
-          <Button 
-            title="Add" 
-            style={styles.buttonInputText} 
-            onPress={addGoalHandler}
-          />
-        </View>
-      </View>
-
-      <View>
-        {goals.map((goal, index) => <Text key={index}>{goal}</Text>)}
-      </View>
+      <FlatList 
+        style={styles.goals} 
+        data={goals} 
+        renderItem={
+          itemData => <GoalItem title={itemData.item.value} />
+        } 
+      />      
     </View>
   );
 }
@@ -45,26 +34,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 20,
   },
-  form: {
-    flexDirection: 'row',
-    width: '80%',
-    justifyContent: 'center',
+  goals: {
+    width: '100%'
   },
-  textInput: {
-    padding: 5,
-    borderColor: 'black',
-    borderRightWidth: 0,
-    borderWidth: 1,
-    width: '60%',
-  },
-  buttonInput: {
-    backgroundColor: 'black',
-    borderColor: 'black',
-    borderWidth: 1,
-    color: 'white',
-  },
-  buttonInputText: {
-    color: 'white'
-  }
 });
